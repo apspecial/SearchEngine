@@ -32,7 +32,6 @@ namespace SearchEngie
             luceneIndexDirectory = Lucene.Net.Store.FSDirectory.Open(indexPath);
         }
 
-        // Activity 8
 
         /// <summary>
         /// Creates the analyser
