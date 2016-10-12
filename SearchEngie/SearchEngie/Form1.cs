@@ -26,6 +26,8 @@ namespace SearchEngie
 
         private void button1_Click(object sender, EventArgs e)
         {
+			LuceneApplication IndexGen = new LuceneApplication();
+			string indexPath = label3.Text;
 
         }
 
