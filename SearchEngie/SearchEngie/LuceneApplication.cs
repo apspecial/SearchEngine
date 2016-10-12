@@ -24,10 +24,7 @@ namespace SearchEngie
             writer = null; // Is set in CreateWriter
         }
 
-        // Activity 7
-        /// <summary>
-        /// Create a Lucene index
-        /// </summary>
+       
         /// <param name="indexPath">Directory to store the index</param>
         public void OpenIndex(string indexPath)
         {
