@@ -36,6 +36,8 @@ namespace SearchEngie
 		string currentFilename;
 		//setting the  directory of the source files
 		string filesPath;
+		//setting the query text 
+		string queryText;
 
 		public LuceneApplication()
 		{
@@ -311,32 +313,50 @@ namespace SearchEngie
 			parser = new MultiFieldQueryParser(Lucene.Net.Util.Version.LUCENE_30, new[] { AUTHOR_FN, TITLE_FN }, analyzer); // activity 8
 		}
 
-		public void SearchAndDisplayResults(string querytext)
+		public List<string> SearchAndSaveResults(string querytext)
 		{
 			querytext = querytext.ToLower();
 			Query query = parser.Parse(querytext);
+			//searching top 100 results
 			TopDocs results = searcher.Search(query, 100);
 
 			//System.Console.WriteLine("Found " + results.TotalHits + " documents.");
-
+			List<string> resultofSearch = new List<string>();
 
 			int rank = 0;
+
 			foreach (ScoreDoc scoreDoc in results.ScoreDocs)
 			{
 				rank++;
 				Lucene.Net.Documents.Document doc = searcher.Doc(scoreDoc.Doc);
-				string titleValue = doc.Get(TITLE_FN).ToString();
-				string authorValue = doc.Get(AUTHOR_FN).ToString(); // activity 5
-																	//                string publisherValue = doc.Get(PUBLISHER_FN).ToString(); // activity 5, 7
-																	//                Console.WriteLine("Rank " + rank + " title " + titleValue);
-																	//                Console.WriteLine("Rank " + rank + " title " + titleValue + " author " + authorValue + " Publisher " + publisherValue); // Activity 5
-				Console.WriteLine("Rank " + rank + " title " + titleValue + " author " + authorValue); // Activity 7
 
+				//output the score of doc
+				float outScore = scoreDoc.Score;
+
+				// output the information for each result
+				string titleValue = doc.Get(TITLE_FN).ToString();
+				string authorValue = doc.Get(AUTHOR_FN).ToString();
+				string bibValue = doc.Get(BIB_FN).ToString();
+				string wordsValue = doc.Get(WORDS_FN).ToString();
+				// activity 5
+				//                string publisherValue = doc.Get(PUBLISHER_FN).ToString(); // activity 5, 7
+				//                Console.WriteLine("Rank " + rank + " title " + titleValue);
+				//                Console.WriteLine("Rank " + rank + " title " + titleValue + " author " + authorValue + " Publisher " + publisherValue); // Activity 5
+				//Console.WriteLine("Rank " + rank + " title " + titleValue + " author " + authorValue); // Activity 7
+
+				//save the result in the list
+				string outputResult = "Rank: " + rank + " Title: " + titleValue + "\n Author: " + authorValue + "\n Bibliography:" + bibValue + "\n Abrstract:" + wordsValue +"\n Score:"+outScore;
+				resultofSearch.Add(outputResult);
 			}
+
+			return resultofSearch;
 		}
 
-		public void GenSearch()
+		public List<string> GenSearch()
 		{
+			SetupSearch();
+			return SearchAndSaveResults(queryText);
+
 		}
 
 
