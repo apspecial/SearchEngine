@@ -7,16 +7,21 @@ using Lucene.Net.Analysis; // for Analyser
 using Lucene.Net.Documents; // for Socument
 using Lucene.Net.Index; //for Index Writer
 using Lucene.Net.Store; //for Director
+using Lucene.Net.QueryParsers;
+using Lucene.Net.Search;
 using System.IO; //for File
+using System.Text.RegularExpressions;
 
 namespace SearchEngie
 {
-    class LuceneApplication
-    {
-        Lucene.Net.Store.Directory luceneIndexDirectory;
-        Lucene.Net.Analysis.Analyzer analyzer;
-        Lucene.Net.Index.IndexWriter writer;
-       // public static Lucene.Net.Util.Version VERSION = Lucene.Net.Util.Version.LUCENE_30;
+	class LuceneApplication
+	{
+		Lucene.Net.Store.Directory luceneIndexDirectory;
+		Lucene.Net.Analysis.Analyzer analyzer;
+		Lucene.Net.Index.IndexWriter writer;
+		IndexSearcher searcher;
+		QueryParser parser;
+		// public static Lucene.Net.Util.Version VERSION = Lucene.Net.Util.Version.LUCENE_30;
 		const Lucene.Net.Util.Version VERSION = Lucene.Net.Util.Version.LUCENE_30;
 		const string DOCID_FN = "DocID";
 		const string TITLE_FN = "Title";
@@ -28,142 +33,215 @@ namespace SearchEngie
 		string title;
 		string bibliography;
 		string words;
+		string currentFilename;
+		//setting the  directory of the source files
+		string filesPath;
 
-        public LuceneApplication()
-        {
-            luceneIndexDirectory = null; // Is set in Create Index
-            analyzer = null;  // Is set in CreateAnalyser
-            writer = null; // Is set in CreateWriter
-			docID = "";
-			author= "";
-			title= "";
-			bibliography= "";
-			words= "";
-
-        }
-
-       
-        /// Directory to store the index
-        public void OpenIndex(string indexPath)
-        {
-            luceneIndexDirectory = Lucene.Net.Store.FSDirectory.Open(indexPath);
-        }
-
-
-
-        /// Creates the analyser
-        public void CreateAnalyser()
-        { 
-            analyzer = new Lucene.Net.Analysis.SimpleAnalyzer();
-        }
-
-
-        /// Creates the index writer
-        public void CreateWriter()
-        {
-
-            IndexWriter.MaxFieldLength mfl = new IndexWriter.MaxFieldLength(IndexWriter.DEFAULT_MAX_FIELD_LENGTH);
-            writer = new Lucene.Net.Index.IndexWriter(luceneIndexDirectory, analyzer, true, mfl);
-        }
-
-        // Activity 9
-        /// <summary>
-        /// Add the text to the index
-        /// </summary>
-        /// <param name="text">The text tio index</param>
-        public void IndexText(string text)
-        {
-
-            // TODO: Enter code to index text
-            System.Console.WriteLine("Indexing " + text);
-            Lucene.Net.Documents.Field field = new Field("Text", text, Field.Store.NO, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
-            Lucene.Net.Documents.Document doc = new Document();
-            doc.Add(field);
-            writer.AddDocument(doc);
-        }
-
-		public void IndexText(string files_directory)
+		public LuceneApplication()
 		{
-			
-			File dir = new File(files_directory);
-			File[] files = dir.listFiles();
-			for (File file : files)
-			{
-				Document document = new Document();
+			luceneIndexDirectory = null; // Is set in Create Index
+			analyzer = null;  // Is set in CreateAnalyser
+			writer = null; // Is set in CreateWriter
+			docID = "";
+			author = "";
+			title = "";
+			bibliography = "";
+			words = "";
+			filesPath = "";
 
-				String path = file.getCanonicalPath();
-				document.add(new Field(FIELD_PATH, path, Field.Store.YES, Field.Index.UN_TOKENIZED));
-				Reader sfa = new
-				Reader reader = new FileReader(file);
-
-				////read text from file.
-				//try
-				//{   // Open the text file using a stream reader.
-				//	using (StreamReader sr = new StreamReader("TestFile.txt"))
-				//	{
-				//		// Read the stream to a string, and write the string to the console.
-				//		String line = sr.ReadToEnd();
-				//		Console.WriteLine(line);
-				//	}
-				//}
-				//catch (Exception e)
-				//{
-				//	Console.WriteLine("The file could not be read:");
-				//	Console.WriteLine(e.Message);
-				//}
-
-				document.add(new Field(FIELD_CONTENTS, reader));
-
-				indexWriter.addDocument(document);
-			}
-			indexWriter.optimize();
-			indexWriter.close();
 		}
+
+
+		/// Directory to store the index
+		public void OpenIndex(string indexPath)
+		{
+			luceneIndexDirectory = Lucene.Net.Store.FSDirectory.Open(indexPath);
+
+		}
+
+
+
+		/// Creates the analyser
+		public void CreateAnalyser()
+		{
+			analyzer = new Lucene.Net.Analysis.SimpleAnalyzer();
+		}
+
+
+		/// Creates the index writer
+		public void CreateWriter()
+		{
+
+			IndexWriter.MaxFieldLength mfl = new IndexWriter.MaxFieldLength(IndexWriter.DEFAULT_MAX_FIELD_LENGTH);
+			writer = new Lucene.Net.Index.IndexWriter(luceneIndexDirectory, analyzer, true, mfl);
+		}
+
+		/// Creates the index writer
+		public void CreateIndex(string indexPath)
+		{
+
+			IndexWriter.MaxFieldLength mfl = new IndexWriter.MaxFieldLength(IndexWriter.DEFAULT_MAX_FIELD_LENGTH);
+			luceneIndexDirectory = Lucene.Net.Store.FSDirectory.Open(indexPath);
+			writer = new Lucene.Net.Index.IndexWriter(luceneIndexDirectory, analyzer, true, mfl);
+		}
+
+		public void CreateIndex()
+		{
+
+			IndexWriter.MaxFieldLength mfl = new IndexWriter.MaxFieldLength(IndexWriter.DEFAULT_MAX_FIELD_LENGTH);
+			luceneIndexDirectory = Lucene.Net.Store.FSDirectory.Open(filesPath);
+			writer = new Lucene.Net.Index.IndexWriter(luceneIndexDirectory, analyzer, true, mfl);
+		}
+		// Activity 9
+		/// <summary>
+		/// Add the text to the index
+		/// </summary>
+		/// <param name="text">The text tio index</param>
+		public void IndexText(string text)
+		{
+
+			// TODO: Enter code to index text
+			System.Console.WriteLine("Indexing " + text);
+			Lucene.Net.Documents.Field field = new Field("Text", text, Field.Store.NO, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+			Lucene.Net.Documents.Document doc = new Document();
+			doc.Add(field);
+			writer.AddDocument(doc);
+		}
+
+		//public void indextexta(string files_directory)
+		//{
+
+		//	file dir = new file(files_directory);
+		//	file[] files = dir.listfiles();
+		//	foreach (file file in files)
+		//	{
+		//		document document = new document();
+
+		//		string path = file.getcanonicalpath();
+		//		document.add(new field(field_path, path, field.store.yes, field.index.un_tokenized));
+		//		reader sfa = new
+		//		reader reader = new filereader(file);
+
+		//		////read text from file.
+		//		//try
+		//		//{   // open the text file using a stream reader.
+		//		//	using (streamreader sr = new streamreader("testfile.txt"))
+		//		//	{
+		//		//		// read the stream to a string, and write the string to the console.
+		//		//		string line = sr.readtoend();
+		//		//		console.writeline(line);
+		//		//	}
+		//		//}
+		//		//catch (exception e)
+		//		//{
+		//		//	console.writeline("the file could not be read:");
+		//		//	console.writeline(e.message);
+		//		//}
+
+		//		document.add(new field(field_contents, reader));
+
+		//		indexwriter.adddocument(document);
+		//	}
+		//	indexwriter.optimize();
+		//	indexwriter.close();
+		//}
 
 		public void ReadFile(string FilePath)
 		{
-			char[] delims = { '.I', '.T', '.A', '.B', '.W' };
-			try
+			//char[] delims = { '.I', '.T', '.A', '.B', '.W' };
+			string delims = @"\s\.[ITABW]";
+
+			//
+			DirectoryInfo di = new DirectoryInfo(FilePath);
+			FileInfo[] listfile = di.GetFiles();
+			int numberofFiles = listfile.Count();
+			foreach (FileInfo name in listfile)
 			{
-				// Create an instance of StreamReader to read from a file.
-				// The using statement also closes the StreamReader.
-				using (StreamReader sr = new StreamReader(FilePath))
+				currentFilename = FilePath + "\\" + name;
+				try
 				{
-					string line;
-					// Read and display lines from the file until the end of 
-					// the file is reached.
-
-					//define a array
-					//int length = 0;
-
-					while ((line = sr.ReadLine()) != null)
+					// Create an instance of StreamReader to read from a file.
+					// The using statement also closes the StreamReader.
+					using (StreamReader sr = new StreamReader(currentFilename))
 					{
-						string[] sections = line.Split(delims);
-						docID = sections[0];
-						author = sections[1];
-						title = sections[2];
-						bibliography = sections[3];
-						words = sections[4];
-						//----
-						//String[] substrings = line.Split(' ');
-						////Console.WriteLine(substrings.GetLength(0));
-						//length += substrings.GetLength(0);
-						//Console.WriteLine(line.ToUpper());
-						//// Console.WriteLine(length);
-						////foreach (String substring in substrings)
-						//// Console.WriteLine("{0}", substring.ToUpper());
-						////nsole.WriteLine("{0} \n", substring.ToUpper());
+						string line;
+						// Read and display lines from the file until the end of 
+						// the file is reached.
+
+						//define a array
+						//int length = 0;
+
+
+						// string[] sectionsa = Regex.Split(line, delims);
+						//  int a = 1;
+						while ((line = sr.ReadToEnd()) != null)
+						{
+							//creat
+
+							//string[] sections = line.Split(delims);
+							string[] sections = Regex.Split(line, delims);
+							Regex regex_id = new Regex(@"\d+");
+							Match match = regex_id.Match(sections[0]);
+							docID = match.Value;
+							title = sections[1];
+							author = sections[2];
+							bibliography = sections[3];
+							words = sections[4].Remove(0, sections[1].Length);
+
+							Lucene.Net.Documents.Field docField = new Field(DOCID_FN, docID, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+							Lucene.Net.Documents.Field titleField = new Field(TITLE_FN, title, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+							Lucene.Net.Documents.Field authorField = new Field(AUTHOR_FN, author, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+							Lucene.Net.Documents.Field bibField = new Field(BIB_FN, bibliography, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+							Lucene.Net.Documents.Field wordsField = new Field(WORDS_FN, words, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+							//            Lucene.Net.Documents.Field publisherField = new Field(PUBLISHER_FN, publisher, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+							//		Lucene.Net.Documents.Field publisherField = new Field(PUBLISHER_FN, publisher, Field.Store.NO, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+
+							Lucene.Net.Documents.Document doc = new Document();
+							//authorField.Boost = 2; // activity 9
+							doc.Add(docField);
+							doc.Add(titleField);
+							doc.Add(authorField);
+							doc.Add(bibField);
+							doc.Add(wordsField);
+
+							writer.AddDocument(doc);
+
+
+
+							//string delims = @"\s\.[ITABW]\n";
+							//char[] delimsa = { '\n' };
+							//string[] sectionsa = Regex.Split(line, delims);
+							//Regex regex = new Regex(@"\d+");
+							//Match match = regex.Match(sectionsa[0]);
+							//string ax = match.Value;
+							//string[] b = sectionsa[1].Split(delimsa);
+							//int a = 1;
+							//a = a++;
+
+							//----
+							//String[] substrings = line.Split(' ');
+							////Console.WriteLine(substrings.GetLength(0));
+							//length += substrings.GetLength(0);
+							//Console.WriteLine(line.ToUpper());
+							//// Console.WriteLine(length);
+							////foreach (String substring in substrings)
+							//// Console.WriteLine("{0}", substring.ToUpper());
+							////nsole.WriteLine("{0} \n", substring.ToUpper());
+						}
+						//Console.WriteLine("\nThe number of words is {0}", length);
 					}
-					//Console.WriteLine("\nThe number of words is {0}", length);
+
 				}
 
+				catch (Exception e)
+				{
+					// Let the user know what went wrong.
+					Console.WriteLine("The file could not be read:");
+					Console.WriteLine(e.Message);
+				}
 			}
-			catch (Exception e)
-			{
-				// Let the user know what went wrong.
-				Console.WriteLine("The file could not be read:");
-				Console.WriteLine(e.Message);
-			}
+
+
 
 
 			//// ACTIVITY 7 - FILL IN CODE HERE
@@ -181,36 +259,93 @@ namespace SearchEngie
 		}
 
 
-		public void IndexBook(string docID,string author, string title, string bibliography,string words)
+		public void IndexBook(string docID, string author, string title, string bibliography, string words)
 		{
 			Lucene.Net.Documents.Field docIDField = new Field(DOCID_FN, docID, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
 			Lucene.Net.Documents.Field authorField = new Field(AUTHOR_FN, author, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
-			Lucene.Net.Documents.Field titleField = new Field(TITLE_FN, text, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+			//Lucene.Net.Documents.Field titleField = new Field(TITLE_FN, text, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
 			//            Lucene.Net.Documents.Field publisherField = new Field(PUBLISHER_FN, publisher, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
-			Lucene.Net.Documents.Field publisherField = new Field(PUBLISHER_FN, publisher, Field.Store.NO, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+			//		Lucene.Net.Documents.Field publisherField = new Field(PUBLISHER_FN, publisher, Field.Store.NO, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
 			Lucene.Net.Documents.Document doc = new Document();
 			authorField.Boost = 2; // activity 9
 			doc.Add(authorField);
-			doc.Add(titleField);
-			doc.Add(publisherField);
+			//	doc.Add(titleField);
+			//	doc.Add(publisherField);
 			writer.AddDocument(doc);
 		}
 
-        /// Flushes buffers and closes the index
-        public void CleanUp()
-        {
-            writer.Optimize();
-            writer.Flush(true, true, true);
-            writer.Dispose();
-        }
+		/// Flushes buffers and closes the index
+		public void CleanUpIndexer()
+		{
+			writer.Optimize();
+			writer.Flush(true, true, true);
+			writer.Dispose();
+		}
+
+		public void CleanUpSearch()
+		{
+			searcher.Dispose();
+		}
+
+		public void GenIndex()
+		{
+			CreateAnalyser();
+			CreateIndex();
+			ReadFile(filesPath);
+			////CreateIndex(Indpath);
+			//ReadFile(string filepath);
+			//CleanUpIndexer;
+
+		}
 
 
-        /// <summary>
-        /// The main program
-        /// </summary>
-        /// <param name="args">command line arguments</param>
-        /// 
-        /*
+		//setup lucene searcher 
+		public void SetupSearch()
+		{
+			searcher = new IndexSearcher(luceneIndexDirectory);
+
+			//            parser = new QueryParser(Lucene.Net.Util.Version.LUCENE_30, TITLE_FN, analyzer);
+			//            parser = new QueryParser(Lucene.Net.Util.Version.LUCENE_30, AUTHOR_FN, analyzer); // activiy 6
+			//            parser = new QueryParser(Lucene.Net.Util.Version.LUCENE_30, PUBLISHER_FN, analyzer);  // activity 6
+
+			parser = new MultiFieldQueryParser(Lucene.Net.Util.Version.LUCENE_30, new[] { AUTHOR_FN, TITLE_FN }, analyzer); // activity 8
+		}
+
+		public void SearchAndDisplayResults(string querytext)
+		{
+			querytext = querytext.ToLower();
+			Query query = parser.Parse(querytext);
+			TopDocs results = searcher.Search(query, 100);
+
+			//System.Console.WriteLine("Found " + results.TotalHits + " documents.");
+
+
+			int rank = 0;
+			foreach (ScoreDoc scoreDoc in results.ScoreDocs)
+			{
+				rank++;
+				Lucene.Net.Documents.Document doc = searcher.Doc(scoreDoc.Doc);
+				string titleValue = doc.Get(TITLE_FN).ToString();
+				string authorValue = doc.Get(AUTHOR_FN).ToString(); // activity 5
+																	//                string publisherValue = doc.Get(PUBLISHER_FN).ToString(); // activity 5, 7
+																	//                Console.WriteLine("Rank " + rank + " title " + titleValue);
+																	//                Console.WriteLine("Rank " + rank + " title " + titleValue + " author " + authorValue + " Publisher " + publisherValue); // Activity 5
+				Console.WriteLine("Rank " + rank + " title " + titleValue + " author " + authorValue); // Activity 7
+
+			}
+		}
+
+		public void GenSearch()
+		{
+		}
+
+
+		/// <summary>
+		/// The main program
+		/// </summary>
+		/// <param name="args">command line arguments</param>
+		/// 
+		/*
         static void Main(string[] args)
         {
 
@@ -252,5 +387,5 @@ namespace SearchEngie
             System.Console.ReadLine();
         }
         */
-    }
+	}
 }
