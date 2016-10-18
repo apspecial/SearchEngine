@@ -370,11 +370,11 @@ namespace SearchEngie
 		{
 			searcher = new IndexSearcher(luceneIndexDirectory);
 
-			//            parser = new QueryParser(Lucene.Net.Util.Version.LUCENE_30, TITLE_FN, analyzer);
-			//            parser = new QueryParser(Lucene.Net.Util.Version.LUCENE_30, AUTHOR_FN, analyzer); // activiy 6
-			//            parser = new QueryParser(Lucene.Net.Util.Version.LUCENE_30, PUBLISHER_FN, analyzer);  // activity 6
+			           parser = new QueryParser(Lucene.Net.Util.Version.LUCENE_30, TITLE_FN, analyzer);
+			//            parser = new QueryParser(Lucene.Net.Util.Version.LUCENE_30, AUTHOR_FN, analyzer); 
+			//            parser = new QueryParser(Lucene.Net.Util.Version.LUCENE_30, PUBLISHER_FN, analyzer);  
 
-			parser = new MultiFieldQueryParser(Lucene.Net.Util.Version.LUCENE_30, new[] { AUTHOR_FN, TITLE_FN }, analyzer); // activity 8
+			//parser = new MultiFieldQueryParser(Lucene.Net.Util.Version.LUCENE_30, new[] { AUTHOR_FN, TITLE_FN }, analyzer);
 		}
 
 		public List<string> SearchAndSaveResults(string querytext)
@@ -420,6 +420,7 @@ namespace SearchEngie
 
 		public List<string> GenSearch()
 		{
+            CreateAnalyser();
 			SetupSearch();
 			return SearchAndSaveResults(queryText);
 		}
