@@ -4,13 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Lucene.Net.Analysis; // for Analyser
+using Lucene.Net.Analysis.Standard; // for standard analyser
 using Lucene.Net.Documents; // for Socument
 using Lucene.Net.Index; //for Index Writer
-using Lucene.Net.Store; //for Director
-using Lucene.Net.QueryParsers;
+using Lucene.Net.Store; //for Directory
+using Lucene.Net.QueryParsers; // for query parser
 using Lucene.Net.Search;
 using System.IO; //for File
 using System.Text.RegularExpressions;
+
 
 namespace SearchEngie
 {
@@ -81,20 +83,32 @@ namespace SearchEngie
 			queryText = askQuery;   //the information need of the user
 		}
 
-		//public string Name
-		//{
-		//	get
-		//	{
-		//		return name;
-		//	}
-		//	set
-		//	{
-		//		name = value;
-		//	}
-		//}
+        public string QueryText
+        {
+            get
+            {
+                return queryText;
+            }
+            set
+            {
+                queryText = value;
+            }
+        }
 
-		/// Directory to store the index
-		public void OpenIndex(string indexPath)
+        //public string Name
+        //{
+        //	get
+        //	{
+        //		return name;
+        //	}
+        //	set
+        //	{
+        //		name = value;
+        //	}
+        //}
+
+        /// Directory to store the index
+        public void OpenIndex(string indexPath)
 		{
 			luceneIndexDirectory = Lucene.Net.Store.FSDirectory.Open(indexPath);
 
@@ -130,7 +144,7 @@ namespace SearchEngie
 		{
 
 			IndexWriter.MaxFieldLength mfl = new IndexWriter.MaxFieldLength(IndexWriter.DEFAULT_MAX_FIELD_LENGTH);
-			luceneIndexDirectory = Lucene.Net.Store.FSDirectory.Open(filesPath);
+			//luceneIndexDirectory = Lucene.Net.Store.FSDirectory.Open(filesPath);
 			writer = new Lucene.Net.Index.IndexWriter(luceneIndexDirectory, analyzer, true, mfl);
 		}
 		// Activity 9
@@ -345,8 +359,9 @@ namespace SearchEngie
 			CreateAnalyser();
 			CreateIndex();
 			ReadFile(filesPath);
-			DateTime indexEnd = DateTime.Now;
-			return "Create Index Successfully! \n"+"The Total Time to Index:" + (indexEnd - start);
+            CleanUpIndexer();
+            DateTime indexEnd = DateTime.Now;
+            return "Create Index Successfully! \n"+"The Total Time to Index:" + (indexEnd - start);
 		}
 
 
@@ -365,6 +380,7 @@ namespace SearchEngie
 		public List<string> SearchAndSaveResults(string querytext)
 		{
 			querytext = querytext.ToLower();
+         
 			Query query = parser.Parse(querytext);
 			//searching top 100 results
 			TopDocs results = searcher.Search(query, 100);
