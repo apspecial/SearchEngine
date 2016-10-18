@@ -26,8 +26,13 @@ namespace SearchEngie
 
         private void button1_Click(object sender, EventArgs e)
         {
-			LuceneApplication IndexGen = new LuceneApplication();
-			string indexPath = label3.Text;
+			
+			string indexPath = label4.Text;
+			string fileofPath = label3.Text;
+			LuceneApplication LuceneApp = new LuceneApplication(fileofPath,indexPath);
+			LuceneApp.GenIndex();
+			//LuceneApp.GenSearch();
+			//IndexGen.ReadFile(fileofPath);
 
         }
 
@@ -128,5 +133,28 @@ namespace SearchEngie
 
             }
         }
+
+		private void button4_Click(object sender, EventArgs e)
+		{
+
+			string indexPath = label4.Text;
+			string fileofPath = label3.Text;
+			string searchText = textBox2.Text;
+			if (searchText == "")
+			{
+				MessageBox.Show("Please input the query");
+			}
+			else
+			{
+				LuceneApplication LuceneApp = new LuceneApplication(fileofPath, indexPath);
+				List<string> result = new List<string>();
+				result= LuceneApp.GenSearch();
+				//display the search result
+				foreach (string s in result)
+				{
+					textBox3.Text += s;
+				}
+			}
+		}
     }
 }

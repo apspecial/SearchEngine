@@ -53,6 +53,45 @@ namespace SearchEngie
 
 		}
 
+		public LuceneApplication(string pathF, string pathI)
+		{
+			luceneIndexDirectory = Lucene.Net.Store.FSDirectory.Open(pathI); // Is set in Create Index
+			analyzer = null;  // Is set in CreateAnalyser
+			writer = null; // Is set in CreateWriter
+			docID = "";
+			author = "";
+			title = "";
+			bibliography = "";
+			words = "";
+			filesPath = pathF;
+
+		}
+
+		public LuceneApplication(string pathF, string pathI,string askQuery)
+		{
+			luceneIndexDirectory = Lucene.Net.Store.FSDirectory.Open(pathI); // Is set in Create Index
+			analyzer = null;  // Is set in CreateAnalyser
+			writer = null; // Is set in CreateWriter
+			docID = "";
+			author = "";
+			title = "";
+			bibliography = "";
+			words = "";
+			filesPath = pathF;
+			queryText = askQuery;   //the information need of the user
+		}
+
+		//public string Name
+		//{
+		//	get
+		//	{
+		//		return name;
+		//	}
+		//	set
+		//	{
+		//		name = value;
+		//	}
+		//}
 
 		/// Directory to store the index
 		public void OpenIndex(string indexPath)
@@ -289,15 +328,25 @@ namespace SearchEngie
 			searcher.Dispose();
 		}
 
-		public void GenIndex()
+		public void GenIndex(string setPath)
 		{
 			CreateAnalyser();
-			CreateIndex();
-			ReadFile(filesPath);
+			CreateIndex(setPath);
+			ReadFile(setPath);
 			////CreateIndex(Indpath);
 			//ReadFile(string filepath);
 			//CleanUpIndexer;
 
+		}
+
+		public string GenIndex()
+		{
+			DateTime start = System.DateTime.Now;
+			CreateAnalyser();
+			CreateIndex();
+			ReadFile(filesPath);
+			DateTime indexEnd = DateTime.Now;
+			return "Create Index Successfully! \n"+"The Total Time to Index:" + (indexEnd - start);
 		}
 
 
@@ -320,6 +369,7 @@ namespace SearchEngie
 			//searching top 100 results
 			TopDocs results = searcher.Search(query, 100);
 
+			string outputResult = "Found" + results.TotalHits + " documents.\n\n";
 			//System.Console.WriteLine("Found " + results.TotalHits + " documents.");
 			List<string> resultofSearch = new List<string>();
 
@@ -345,7 +395,7 @@ namespace SearchEngie
 				//Console.WriteLine("Rank " + rank + " title " + titleValue + " author " + authorValue); // Activity 7
 
 				//save the result in the list
-				string outputResult = "Rank: " + rank + " Title: " + titleValue + "\n Author: " + authorValue + "\n Bibliography:" + bibValue + "\n Abrstract:" + wordsValue +"\n Score:"+outScore;
+				 outputResult += "Rank: " + rank + " Title: " + titleValue + "\n Author: " + authorValue + "\n Bibliography:" + bibValue + "\n Abrstract:" + wordsValue +"\n Score:"+outScore;
 				resultofSearch.Add(outputResult);
 			}
 
@@ -356,7 +406,6 @@ namespace SearchEngie
 		{
 			SetupSearch();
 			return SearchAndSaveResults(queryText);
-
 		}
 
 
