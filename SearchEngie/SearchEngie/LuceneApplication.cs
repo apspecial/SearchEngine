@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data;
 using System.Text;
 using System.Threading.Tasks;
 using Lucene.Net.Analysis; // for Analyser
@@ -29,28 +30,38 @@ namespace SearchEngie
 		const string TITLE_FN = "Title";
 		const string AUTHOR_FN = "Author";
 		const string BIB_FN = "Bibliography";
-		const string WORDS_FN = "Words";
-		string docID;   //file information segment
-		string author;
-		string title;
-		string bibliography;
-		string words;
+		const string WORDS_FN = "Abstract";
+		//string docID;   //file information segment
+		//string author;
+		//string title;
+		//string bibliography;
+		//string words;
 		string currentFilename;
 		//setting the  directory of the source files
 		string filesPath;
-		//setting the query text 
-		string queryText;
+        //setting the query text 
+        string queryText;
+		//Dictionary<int,string> queryDic;
+        //
+        string submittedQuery { get; set; }
+        //
+        public char[] splitters = new char[] { ' ', '\t', '\'', '"', '-', '(', ')', ',', '’', '\n', ':', ';', '?', '.', '!' };
+        public string[] stopWords = { "a", "an", "and", "are", "as", "at", "be", "but", "by", "for", "if", "in", "into", "is", "it", "no", "not", "of", "on", "or", "such", "that", "the", "their", "then", "there", "these", "they", "this", "to", "was", "will", "with" }; // for challange activity
 
-		public LuceneApplication()
+		//
+		public string SubmittedQuery { get; set; }
+		public string QueryText{ get; set; }
+
+        public LuceneApplication()
 		{
 			luceneIndexDirectory = null; // Is set in Create Index
 			analyzer = null;  // Is set in CreateAnalyser
 			writer = null; // Is set in CreateWriter
-			docID = "";
-			author = "";
-			title = "";
-			bibliography = "";
-			words = "";
+			//docID = "";
+			//author = "";
+			//title = "";
+			//bibliography = "";
+			//words = "";
 			filesPath = "";
 
 		}
@@ -60,11 +71,11 @@ namespace SearchEngie
 			luceneIndexDirectory = Lucene.Net.Store.FSDirectory.Open(pathI); // Is set in Create Index
 			analyzer = null;  // Is set in CreateAnalyser
 			writer = null; // Is set in CreateWriter
-			docID = "";
-			author = "";
-			title = "";
-			bibliography = "";
-			words = "";
+			//docID = "";
+			//author = "";
+			//title = "";
+			//bibliography = "";
+			//words = "";
 			filesPath = pathF;
 
 		}
@@ -74,38 +85,19 @@ namespace SearchEngie
 			luceneIndexDirectory = Lucene.Net.Store.FSDirectory.Open(pathI); // Is set in Create Index
 			analyzer = null;  // Is set in CreateAnalyser
 			writer = null; // Is set in CreateWriter
-			docID = "";
-			author = "";
-			title = "";
-			bibliography = "";
-			words = "";
+			//docID = "";
+			//author = "";
+			//title = "";
+			//bibliography = "";
+			//words = "";
 			filesPath = pathF;
 			queryText = askQuery;   //the information need of the user
 		}
 
-        public string QueryText
-        {
-            get
-            {
-                return queryText;
-            }
-            set
-            {
-                queryText = value;
-            }
-        }
+  
 
-        //public string Name
-        //{
-        //	get
-        //	{
-        //		return name;
-        //	}
-        //	set
-        //	{
-        //		name = value;
-        //	}
-        //}
+
+    
 
         /// Directory to store the index
         public void OpenIndex(string indexPath)
@@ -132,7 +124,7 @@ namespace SearchEngie
 		}
 
 		/// Creates the index writer
-		public void CreateIndex(string indexPath)
+		public void CreateWriter(string indexPath)
 		{
 
 			IndexWriter.MaxFieldLength mfl = new IndexWriter.MaxFieldLength(IndexWriter.DEFAULT_MAX_FIELD_LENGTH);
@@ -140,80 +132,103 @@ namespace SearchEngie
 			writer = new Lucene.Net.Index.IndexWriter(luceneIndexDirectory, analyzer, true, mfl);
 		}
 
-		public void CreateIndex()
+	
+		public void IndexBook(Book book)
 		{
+			
+			Lucene.Net.Documents.Field docField = new Field(DOCID_FN, book.DocId, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+			Lucene.Net.Documents.Field titleField = new Field(TITLE_FN, book.Title, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+			Lucene.Net.Documents.Field authorField = new Field(AUTHOR_FN, book.Author, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+			Lucene.Net.Documents.Field bibField = new Field(BIB_FN, book.Bibliography, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+			Lucene.Net.Documents.Field wordsField = new Field(WORDS_FN, book.Words, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
 
-			IndexWriter.MaxFieldLength mfl = new IndexWriter.MaxFieldLength(IndexWriter.DEFAULT_MAX_FIELD_LENGTH);
-			//luceneIndexDirectory = Lucene.Net.Store.FSDirectory.Open(filesPath);
-			writer = new Lucene.Net.Index.IndexWriter(luceneIndexDirectory, analyzer, true, mfl);
-		}
-		// Activity 9
-		/// <summary>
-		/// Add the text to the index
-		/// </summary>
-		/// <param name="text">The text tio index</param>
-		public void IndexText(string text)
-		{
-
-			// TODO: Enter code to index text
-			System.Console.WriteLine("Indexing " + text);
-			Lucene.Net.Documents.Field field = new Field("Text", text, Field.Store.NO, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
 			Lucene.Net.Documents.Document doc = new Document();
-			doc.Add(field);
+			doc.Add(docField);
+			//setting boost
+			titleField.Boost = 2;
+			doc.Add(titleField);
+			doc.Add(authorField);
+			doc.Add(bibField);
+			doc.Add(wordsField);
 			writer.AddDocument(doc);
 		}
 
-		//public void indextexta(string files_directory)
-		//{
 
-		//	file dir = new file(files_directory);
-		//	file[] files = dir.listfiles();
-		//	foreach (file file in files)
-		//	{
-		//		document document = new document();
+		public Book ReadOneFile(string filePath)
+		{
+			string delims = @".[ITABW]";
+			Book outbook = new Book();
 
-		//		string path = file.getcanonicalpath();
-		//		document.add(new field(field_path, path, field.store.yes, field.index.un_tokenized));
-		//		reader sfa = new
-		//		reader reader = new filereader(file);
+			try
+			{
+				// Create an instance of StreamReader to read from a file.
+				// The using statement also closes the StreamReader.
+				using (StreamReader sr = new StreamReader(filePath))
+				{
+					string line;
+					while ((line = sr.ReadToEnd()) != null)
+					{
+						string[] sections = Regex.Split(line, delims);
+						outbook.DocId = sections[1].Replace("\"", " ").Replace("\n", " ");
+						outbook.Title = sections[2].Replace("\"", " ").Replace("\n", " ");
+						outbook.Author = sections[3].Replace("\"", " ").Replace("\n", " ");
+						outbook.Bibliography = sections[4].Replace("\"", " ").Replace("\n", " ");
+						//delete first sentence.
+						outbook.Words = sections[5].Remove(0, sections[2].Length).Replace("\"", " ").Replace("\n", " ");
+					}
+					
+				}
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine("The file could not be read:");
+				Console.WriteLine(e.Message);
+			}
+			return outbook;
+		}
 
-		//		////read text from file.
-		//		//try
-		//		//{   // open the text file using a stream reader.
-		//		//	using (streamreader sr = new streamreader("testfile.txt"))
-		//		//	{
-		//		//		// read the stream to a string, and write the string to the console.
-		//		//		string line = sr.readtoend();
-		//		//		console.writeline(line);
-		//		//	}
-		//		//}
-		//		//catch (exception e)
-		//		//{
-		//		//	console.writeline("the file could not be read:");
-		//		//	console.writeline(e.message);
-		//		//}
+		public void CreateIndex()
+		{
+			//read files from directory
+			DirectoryInfo di = new DirectoryInfo(filesPath);
+			FileInfo[] listfile = di.GetFiles();
+			int numberofFiles = listfile.Count();
+			string fileName;
+			//
+			foreach (FileInfo name in listfile)
+			{
 
-		//		document.add(new field(field_contents, reader));
+				//fileName = filesPath + "\\" + name;
+				Book genBook = ReadOneFile(name.ToString());
+				IndexBook(genBook);
 
-		//		indexwriter.adddocument(document);
-		//	}
-		//	indexwriter.optimize();
-		//	indexwriter.close();
-		//}
+			}
+
+		}
+
 
 		public void ReadFile(string FilePath)
 		{
 			//char[] delims = { '.I', '.T', '.A', '.B', '.W' };
-			string delims = @"\s\.[ITABW]";
-
-			//
-			DirectoryInfo di = new DirectoryInfo(FilePath);
+			//string delims = @"\s\.[ITABW]";
+			string delims = @"\.[ITABW]";
+            Lucene.Net.Documents.Field docField;
+            Lucene.Net.Documents.Field titleField;
+            Lucene.Net.Documents.Field authorField;
+            Lucene.Net.Documents.Field bibField;
+            Lucene.Net.Documents.Field wordsField;
+            
+            //
+            DirectoryInfo di = new DirectoryInfo(FilePath);
 			FileInfo[] listfile = di.GetFiles();
 			int numberofFiles = listfile.Count();
+
+            //
 			foreach (FileInfo name in listfile)
 			{
-				currentFilename = FilePath + "\\" + name;
-				try
+                currentFilename = FilePath + "\\" + name;
+                //currentFilename = FilePath + "\\" + listfile[0];
+                try
 				{
 					// Create an instance of StreamReader to read from a file.
 					// The using statement also closes the StreamReader.
@@ -237,23 +252,26 @@ namespace SearchEngie
 							string[] sections = Regex.Split(line, delims);
 							Regex regex_id = new Regex(@"\d+");
 							Match match = regex_id.Match(sections[0]);
-							docID = match.Value;
-							title = sections[1];
-							author = sections[2];
-							bibliography = sections[3];
-							words = sections[4].Remove(0, sections[1].Length);
+							string docID = match.Value;
+							string title = sections[1];
+							string author = sections[2];
+							string bibliography = sections[3];
+                            //delete the first line in abrstact
+							string words = sections[4].Remove(0, sections[1].Length);
 
-							Lucene.Net.Documents.Field docField = new Field(DOCID_FN, docID, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
-							Lucene.Net.Documents.Field titleField = new Field(TITLE_FN, title, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
-							Lucene.Net.Documents.Field authorField = new Field(AUTHOR_FN, author, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
-							Lucene.Net.Documents.Field bibField = new Field(BIB_FN, bibliography, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
-							Lucene.Net.Documents.Field wordsField = new Field(WORDS_FN, words, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+						    docField = new Field(DOCID_FN, docID, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+							titleField = new Field(TITLE_FN, title, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+							authorField = new Field(AUTHOR_FN, author, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+							bibField = new Field(BIB_FN, bibliography, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+							wordsField = new Field(WORDS_FN, words, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
 							//            Lucene.Net.Documents.Field publisherField = new Field(PUBLISHER_FN, publisher, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
 							//		Lucene.Net.Documents.Field publisherField = new Field(PUBLISHER_FN, publisher, Field.Store.NO, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
 
+							
+                            //setting boost
+                            titleField.Boost = 2.0f;  
 							Lucene.Net.Documents.Document doc = new Document();
-							//authorField.Boost = 2; // activity 9
-							doc.Add(docField);
+                            doc.Add(docField);
 							doc.Add(titleField);
 							doc.Add(authorField);
 							doc.Add(bibField);
@@ -297,7 +315,7 @@ namespace SearchEngie
 			}
 
 
-
+            
 
 			//// ACTIVITY 7 - FILL IN CODE HERE
 			//char[] delims = { ' ', '\n' };
@@ -314,20 +332,7 @@ namespace SearchEngie
 		}
 
 
-		public void IndexBook(string docID, string author, string title, string bibliography, string words)
-		{
-			Lucene.Net.Documents.Field docIDField = new Field(DOCID_FN, docID, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
-			Lucene.Net.Documents.Field authorField = new Field(AUTHOR_FN, author, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
-			//Lucene.Net.Documents.Field titleField = new Field(TITLE_FN, text, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
-			//            Lucene.Net.Documents.Field publisherField = new Field(PUBLISHER_FN, publisher, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
-			//		Lucene.Net.Documents.Field publisherField = new Field(PUBLISHER_FN, publisher, Field.Store.NO, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
-			Lucene.Net.Documents.Document doc = new Document();
-			authorField.Boost = 2; // activity 9
-			doc.Add(authorField);
-			//	doc.Add(titleField);
-			//	doc.Add(publisherField);
-			writer.AddDocument(doc);
-		}
+	
 
 		/// Flushes buffers and closes the index
 		public void CleanUpIndexer()
@@ -345,7 +350,7 @@ namespace SearchEngie
 		public void GenIndex(string setPath)
 		{
 			CreateAnalyser();
-			CreateIndex(setPath);
+			CreateWriter(setPath);
 			ReadFile(setPath);
 			////CreateIndex(Indpath);
 			//ReadFile(string filepath);
@@ -357,8 +362,9 @@ namespace SearchEngie
 		{
 			DateTime start = System.DateTime.Now;
 			CreateAnalyser();
+			CreateWriter();
 			CreateIndex();
-			ReadFile(filesPath);
+			//ReadFile(filesPath);
             CleanUpIndexer();
             DateTime indexEnd = DateTime.Now;
             return "Create Index Successfully! \n"+"The Total Time to Index:" + (indexEnd - start);
@@ -370,22 +376,56 @@ namespace SearchEngie
 		{
 			searcher = new IndexSearcher(luceneIndexDirectory);
 
-			           parser = new QueryParser(Lucene.Net.Util.Version.LUCENE_30, TITLE_FN, analyzer);
-			//            parser = new QueryParser(Lucene.Net.Util.Version.LUCENE_30, AUTHOR_FN, analyzer); 
-			//            parser = new QueryParser(Lucene.Net.Util.Version.LUCENE_30, PUBLISHER_FN, analyzer);  
+            //         parser = new QueryParser(Lucene.Net.Util.Version.LUCENE_30, TITLE_FN, analyzer);
+            //            parser = new QueryParser(Lucene.Net.Util.Version.LUCENE_30, AUTHOR_FN, analyzer); 
+            //            parser = new QueryParser(Lucene.Net.Util.Version.LUCENE_30, PUBLISHER_FN, analyzer);  
 
-			//parser = new MultiFieldQueryParser(Lucene.Net.Util.Version.LUCENE_30, new[] { AUTHOR_FN, TITLE_FN }, analyzer);
+            //setting boost of the fields
+            //HashMap<String, Float> boosts = new HashMap<String, Float>();
+            Dictionary<string, float> boosts = new Dictionary<string, float>();
+            boosts.Add(TITLE_FN, 1);
+            boosts.Add(WORDS_FN, 5);
+            parser = new MultiFieldQueryParser(Lucene.Net.Util.Version.LUCENE_30, new[] { TITLE_FN,WORDS_FN  }, analyzer, boosts);
+            parser.DefaultOperator = QueryParser.OR_OPERATOR;
 		}
 
 		public List<string> SearchAndSaveResults(string querytext)
 		{
-			querytext = querytext.ToLower();
-         
-			Query query = parser.Parse(querytext);
-			//searching top 100 results
-			TopDocs results = searcher.Search(query, 100);
+           // List<QueryParser> parserlist = new List<QueryParser>;
 
-			string outputResult = "Found" + results.TotalHits + " documents.\n\n";
+            //create the correct parser
+            //foreach (KeyValuePair<int, string> pair in queryDicIn)
+            //{
+            //    switch (pair.Key )
+            //    {
+            //        case 0:
+            //            parser = new QueryParser(Lucene.Net.Util.Version.LUCENE_30, TITLE_FN, analyzer);
+            //            break;
+            //        case 1:
+            //            parser = new QueryParser(Lucene.Net.Util.Version.LUCENE_30, AUTHOR_FN, analyzer);
+            //            break;
+            //        case 2:
+            //            parser = new QueryParser(Lucene.Net.Util.Version.LUCENE_30, BIB_FN, analyzer);
+            //            break;
+            //        case 3:
+            //            parser = new QueryParser(Lucene.Net.Util.Version.LUCENE_30, WORDS_FN, analyzer);
+            //            break;
+            //        case 4:
+            //            parser = new MultiFieldQueryParser(Lucene.Net.Util.Version.LUCENE_30, new[] { AUTHOR_FN, TITLE_FN, BIB_FN , WORDS_FN }, analyzer);
+            //            break;
+            //    }
+                
+            //}
+
+
+
+
+            queryText = querytext.ToLower();
+            Query query = parser.Parse(queryText);
+            submittedQuery = query.ToString();
+            //searching top 100 results
+            TopDocs results = searcher.Search(query, 100);
+            string outputResult = "Found" + results.TotalHits + " documents.\n\n";
 			//System.Console.WriteLine("Found " + results.TotalHits + " documents.");
 			List<string> resultofSearch = new List<string>();
 
@@ -418,20 +458,306 @@ namespace SearchEngie
 			return resultofSearch;
 		}
 
-		public List<string> GenSearch()
+		//get first sentence
+		public string GetFirstSentence(string inText)
 		{
-            CreateAnalyser();
-			SetupSearch();
-			return SearchAndSaveResults(queryText);
+			string[] segs = inText.Split('.');
+			return segs[0];
 		}
 
+		//
+		public DataTable SearchText(string queryText, bool isprecess)
+		{
+			DataTable table = new DataTable();
+			table.Columns.Add("Rank", typeof(int));
+			table.Columns.Add("Title", typeof(string));
+			table.Columns.Add("Author", typeof(string));
+			table.Columns.Add("Bibliography", typeof(string));
+			table.Columns.Add("Abstract", typeof(string));
 
-		/// <summary>
-		/// The main program
-		/// </summary>
-		/// <param name="args">command line arguments</param>
-		/// 
-		/*
+			queryText = queryText.ToLower();
+			TopDocs results;
+			if (isprecess)
+			{
+				results = searcher.Search(GenFianlQuery(queryText), 100);
+			}
+			else
+			{
+				results = searcher.Search(parser.Parse(queryText), 100);
+			}
+
+			int rank = 0;
+			if (results.TotalHits != 0)
+			{
+				foreach (ScoreDoc scoreDoc in results.ScoreDocs)
+				{
+					rank++;
+					Lucene.Net.Documents.Document doc = searcher.Doc(scoreDoc.Doc);
+
+					////output the score of doc
+					//outScore = scoreDoc.Score;
+
+					//// output the information for each result
+					//titleValue = doc.Get(TITLE_FN).ToString();
+					//authorValue = doc.Get(AUTHOR_FN).ToString();
+					//bibValue = doc.Get(BIB_FN).ToString();
+					//wordsValue = doc.Get(WORDS_FN).ToString();
+					//docid = doc.Get(DOCID_FN).ToString();
+					//linetoWrite = pair.Key + "\t" + "Q0" + "\t" + docid + "\t" + rank.ToString() + "\t" + outScore.ToString() + "\t" + "n9391576_dreamers";
+
+					//writetext.WriteLine(linetoWrite);
+
+
+
+
+					// Here we add five DataRows.
+					table.Rows.Add(rank, doc.Get(TITLE_FN).ToString(), doc.Get(AUTHOR_FN).ToString(), doc.Get(BIB_FN).ToString(),GetFirstSentence(doc.Get(WORDS_FN).ToString()));
+				
+
+				}
+
+			}
+			return table;
+		}
+
+		//inputQes refers to the information need in txt file, filepath is the path which the result is saved
+		public void SearchAndSaveResults(Dictionary<string,string> inputQes,string filepath)
+        {
+            BooleanQuery finalQuery;
+            string titleValue;
+            string authorValue;
+            string bibValue;
+            string wordsValue;
+            string docid;
+            string linetoWrite;
+            float outScore;
+            List<string> resultofSearch = new List<string>();
+            TopDocs results;
+            int rank;
+			using (StreamWriter writetext = new StreamWriter(filepath))
+            {
+				foreach (var pair in inputQes)
+				{
+					finalQuery = GenFianlQuery(pair.Value);
+					//searching top 100 results
+					//results = searcher.Search(finalQuery, 100);
+					results = searcher.Search(finalQuery, 100);
+					//Query query = parser.Parse("what \"similarity laws\" must be obeyed when constructing aeroelastic models\nof heated high speed aircraft");
+					//results = searcher.Search(query, 100);
+					rank = 0;
+					if (results.TotalHits != 0)
+					{
+						foreach (ScoreDoc scoreDoc in results.ScoreDocs)
+						{
+							rank++;
+							Lucene.Net.Documents.Document doc = searcher.Doc(scoreDoc.Doc);
+
+							//output the score of doc
+							outScore = scoreDoc.Score;
+
+							// output the information for each result
+							titleValue = doc.Get(TITLE_FN).ToString();
+							authorValue = doc.Get(AUTHOR_FN).ToString();
+							bibValue = doc.Get(BIB_FN).ToString();
+							wordsValue = doc.Get(WORDS_FN).ToString();
+							docid = doc.Get(DOCID_FN).ToString();
+							linetoWrite = pair.Key + "\t" + "Q0" + "\t" + docid + "\t" + rank.ToString() + "\t" + outScore.ToString() + "\t" + "n9391576_dreamers";
+
+							writetext.WriteLine(linetoWrite);
+						}
+						//save the result in the list
+						// outputResult += "Rank: " + rank + " Title: " + titleValue + "\n Author: " + authorValue + "\n Bibliography:" + bibValue + "\n Abrstract:" + wordsValue + "\n Score:" + outScore;
+						//resultofSearch.Add(outputResult);
+					}
+				}
+            }
+        }
+
+
+       
+
+
+        public string[] TokeniseString(string text)
+        { 
+           return text.ToLower().Split(splitters, StringSplitOptions.RemoveEmptyEntries);
+        }
+
+        public string[] StopWordFilter(string[] tokens)
+        {
+
+            int numTokens = tokens.Count();
+            List<string> filteredTokens = new List<string>();
+            for (int i = 0; i < numTokens; i++)
+            {
+                string token = tokens[i];
+                if (!stopWords.Contains(token) && (token.Length > 2)) filteredTokens.Add(token);
+            }
+            return filteredTokens.ToArray<string>();
+        }
+
+        public string StopWordFilter(string inpText)
+        {
+
+            string[] tokens = inpText.Split(' ');
+            int numTokens = tokens.Count();
+            //List<string> filteredTokens = new List<string>();
+            string filteredTokens = "";
+            for (int i = 0; i < numTokens; i++)
+            {
+                string token = tokens[i];
+                if (!stopWords.Contains(token) && (token.Length > 2))
+                    filteredTokens+= token + " ";
+            }
+            return filteredTokens;
+        }
+
+
+        //transmit the string to the final query
+        public BooleanQuery GenFianlQuery(string inputText)
+        {
+            string delims = "\"(.*)\"";
+			//inputText = "I love you haha what is that \"file ahde\" what kind";
+			//inputText = "I love you haha what is that ";
+            //inputText = "\"similarity laws\" must be obeyed when constructing aeroelastic models of heated high speed aircraft";
+            //get the matched phrase
+            string getPhrase = Regex.Match(inputText, delims).Value;
+            //the remaining words excluding the phase
+            string remainWords = inputText.Remove(Regex.Match(inputText, delims).Index, Regex.Match(inputText, delims).Value.Length);
+
+			//tokenlize the remaining words
+			//string[] filterTokens = StopWordFilter(TokeniseString(remainWords));
+			//delete stopwords from remaining words
+			//string filterWords = StopWordFilter(remainWords);
+			string filterWords = StopWordFilter(inputText.Replace("\"", " ").Replace("\n"," "));
+
+            BooleanQuery finalQuery = new BooleanQuery();
+
+			if (getPhrase != "")
+			{
+				//drag out the content of the phrase without qoatation
+				string remPhrase = getPhrase.Remove(getPhrase.Length - 1, 1).Remove(0, 1);
+				PhraseQuery phraseQuery = new PhraseQuery();
+				phraseQuery.Add(new Term(remPhrase));
+				//setting boost
+				phraseQuery.Boost = 10;
+				//finalQuery.Add(phraseQuery, Occur.MUST);
+				finalQuery.Add(phraseQuery, Occur.SHOULD);
+			}
+			//if query need tokens, should change the method
+			//finalQuery.Add(parser.Parse(remainWords), Occur.SHOULD);
+			finalQuery.Add(parser.Parse(filterWords), Occur.SHOULD);
+            string result = finalQuery.ToString();
+            return finalQuery;
+            
+        }
+
+        public Dictionary<string, string> ReadInfoNeed()
+        {
+
+			//System.IO.Directory filePath = System.IO.Directory.GetParent(filesPath);
+			//var gparent = System.IO.Directory.GetParent(filesPath).ToString();
+			//string filepath = gparent + "\\" + "cran_information_needs.txt";
+
+			//string filepath = "H:\\IFN647\\Assignment\\collection(2)\\" + "cran_information_needs.txt";
+			string filepath = "cran_information_needs.txt";
+			//string delims = @"\s\.[ID]";
+			string delims = ".[ID]";
+            //char[] splitters = new char[] { ' ', '\t', '\'', '"', '-', '(', ')', ',', '’', '\n', ':', ';', '?', '.', '!' };
+            Dictionary<string, string> outInfoNeed = new Dictionary<string, string>();
+            //string topicID;
+            //string topicCon;
+            //int startP;
+            //string topicContend;
+            
+            try
+            {
+                // Create an instance of StreamReader to read from a file.
+                // The using statement also closes the StreamReader.
+                using (StreamReader sr = new StreamReader(filepath))
+                {
+                    string line;
+                    if ((line = sr.ReadToEnd()) != null)
+                    {
+                        DateTime startTime = DateTime.Now;
+                        //using Regex to split
+                        string[] sections = Regex.Split(line, delims);
+                        //another method to split
+                        //string[] sections = line.Split('.');
+                        //startP = line.IndexOf(".I");
+                        //topicID = line. 
+                        //line.
+                        //int halfsize = sections.Length / 2;
+                        for (int i = 1; i < sections.Length; i=i+2)
+                        {
+                            //if (i % 2 == 0)
+                            //{
+
+                            //    topicID = sections[i].Substring(sections[i].Length - 3, 3);
+                          
+                            //}
+                            //else
+                            //{
+                            //    topicCon = sections[i];
+                            //}
+                            //adding to dictionary
+                            //outInfoNeed.Add(sections[i].Substring(sections[i].Length - 3, 3), sections[i+1]);
+							outInfoNeed.Add(sections[i].Replace("\n", " "), sections[i + 1].Replace("\n", " "));
+                        }
+
+
+                        DateTime endTime = DateTime.Now;
+                        //
+                        TimeSpan totaltime = endTime-startTime;
+                        string showtime = totaltime.ToString();
+                        
+                        //int  topicID = match.Value;
+                       // title = sections[1];
+                        //author = sections[2];
+                        //bibliography = sections[3];
+                        ////delete the first line in abrstact
+                        //words = sections[4].Remove(0, sections[1].Length);
+
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                // Let the user know what went wrong.
+                Console.WriteLine("The file could not be read:");
+                Console.WriteLine(e.Message);
+            }
+            return outInfoNeed;
+        }
+
+		public DataTable GenSearch()
+		{
+            //test
+            //GenFianlQuery(queryText);
+            ///
+            CreateAnalyser();
+			SetupSearch();
+			//GenFianlQuery(queryText);
+			//return SearchAndSaveResults(queryText);
+			return SearchText(queryText,true);
+		}
+
+		public void TestFun(string filepath)
+        {
+            //test
+            //GenFianlQuery("test");
+            ///
+            CreateAnalyser();
+            SetupSearch();
+
+			SearchAndSaveResults(ReadInfoNeed(),filepath);
+			CleanUpSearch();
+        }
+        /// <summary>
+        /// The main program
+        /// </summary>
+        /// <param name="args">command line arguments</param>
+        /// 
+        /*
         static void Main(string[] args)
         {
 
@@ -473,5 +799,5 @@ namespace SearchEngie
             System.Console.ReadLine();
         }
         */
-	}
+    }
 }

@@ -27,7 +27,7 @@ namespace SearchEngie
         private void button1_Click(object sender, EventArgs e)
         {
             textBox1.Clear();
-            textBox1.Text = "Start Index";
+            //textBox1.Text = "Start Index";
 			string indexPath = label4.Text;
 			string fileofPath = label3.Text;
 			LuceneApplication LuceneApp = new LuceneApplication(fileofPath,indexPath);
@@ -136,13 +136,101 @@ namespace SearchEngie
             }
         }
 
+
+
 		private void button4_Click(object sender, EventArgs e)
 		{
+            //clear old result
+            //label8.Text = "Submitted Query:";
+            textBox4.Text = "";
+            //richTextBox1.Text = "";
 
-			string indexPath = label4.Text;
+            string indexPath = label4.Text;
 			string fileofPath = label3.Text;
 			string searchText = textBox2.Text;
-			if ((indexPath == "") || (indexPath == null) || (indexPath == "None")) 
+            // string searchField = comboBox1.SelectedItem.ToString();
+
+
+            dataGridView1.Visible = true;
+            //fill the whole area
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+			dataGridView1.Rows.Clear();
+			dataGridView1.Refresh();
+            //dataGridView1.AutoResizeColumn();
+           // string[] row1 = new string[] { "Meatloaf", "Main Dish", "ground beef",
+           //"**" };
+           // dataGridView1.Rows.Add(row1);
+
+           // //test list
+           // List<string> test_grid = new List<string>();
+           // test_grid.Add("1");
+           // test_grid.Add("2");
+           // test_grid.Add("3");
+
+
+           // DataGridViewRow row = (DataGridViewRow)dataGridView1.Rows[0].Clone();
+           // row.Cells[0].Value ="1";
+           // row.Cells[1].Value ="2";
+           // row.Cells[2].Value = "3";
+
+           // dataGridView1.Rows.Add(row);
+
+
+            //// ... Create 2D array of strings.
+            //string[,] array = new string[,]
+            //{
+            //    {"cat", "dog"},
+            //    {"bird", "fish"},
+            //};
+            //// ... Print out values.
+            //Console.WriteLine(array[0, 0]);
+            //Console.WriteLine(array[0, 1]);
+            //Console.WriteLine(array[1, 0]);
+            //Console.WriteLine(array[1, 1]);
+
+
+
+            //            // Create a new DataTable.
+            //            DataTable table = new DataTable("Payments");
+
+            //            // Declare variables for DataColumn and DataRow objects.
+            //            DataColumn column;
+            //            DataRow row;
+
+            //            // Create new DataColumn, set DataType, 
+            //            // ColumnName and add to DataTable.    
+            //            column = new DataColumn();
+            //            column.DataType = System.Type.GetType("System.Int32");
+            //            column.ColumnName = "id";
+            //            column.ReadOnly = true;
+            //            column.Unique = true;
+            //           // column.Caption = LocalizedCaption.get("id"); //LocalizedCaption is my library to retrieve the chinese caption
+
+            //// Add the Column to the DataColumnCollection.
+            //            table.Columns.Add(column);
+
+
+            //            // Create three new DataRow objects and add them to the DataTable
+            //            for (int i = 0; i <= 2; i++)
+            //            {
+            //                row = table.NewRow();
+            //                row["id"] = i;
+            //                table.Rows.Add(row);
+            //            }
+
+            //            //assign the DataTable as the datasource for a DataGridView
+            //            dataGridView1.DataSource = table;
+
+
+
+
+            //create the dictionary for the queryField and queryText
+            //Dictionary<int, string> dic_search = new Dictionary<int, string>();
+            //dic_search.Add(selcetField, searchText);
+
+            
+            if ((indexPath == "") || (indexPath == null) || (indexPath == "None")) 
 			{
 				MessageBox.Show("Please input the directory of Index!");
 			}
@@ -152,19 +240,45 @@ namespace SearchEngie
             } 
 			else
 			{
-				LuceneApplication LuceneApp = new LuceneApplication(fileofPath, indexPath);
-                LuceneApp.QueryText = searchText;
-				List<string> result = new List<string>();
-				result= LuceneApp.GenSearch();
+				LuceneApplication LuceneApp = new LuceneApplication(fileofPath, indexPath,searchText);
+               // LuceneApp.QueryText = searchText;
+
+				//List<string> result = new List<string>();
+				DataTable table = LuceneApp.GenSearch(); 
+				//result= LuceneApp.GenSearch();
                 LuceneApp.CleanUpSearch();
-				//display the search result
-				foreach (string s in result)
-				{
-                    richTextBox1.Text += s;
-				}
+				//display the submitted query
+				//label8.Text += LuceneApp.SubmittedQuery;
+				dataGridView1.DataSource = table;
+                textBox4.Text += LuceneApp.SubmittedQuery;
+                //display the search result
+    //            foreach (string s in result)
+				//{
+    //                //richTextBox1.Text += s;
+				//}
 			}
 		}
 
-       
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+			saveFileDialog1.Filter = "Text|*.txt";
+			saveFileDialog1.Title = "Save an Text File";
+			saveFileDialog1.ShowDialog();
+			//saveFileDialog1.FileName
+
+			string indexPath = label4.Text;
+            string fileofPath = label3.Text;
+            LuceneApplication testApp = new LuceneApplication(fileofPath,indexPath);
+
+            //testApp.ReadInfoNeed();
+			testApp.TestFun(saveFileDialog1.FileName);
+
+        }
     }
 }
