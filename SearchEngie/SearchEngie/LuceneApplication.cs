@@ -474,12 +474,15 @@ namespace SearchEngie
 			table.Columns.Add("Author", typeof(string));
 			table.Columns.Add("Bibliography", typeof(string));
 			table.Columns.Add("Abstract", typeof(string));
+			table.Columns.Add("Abstract_all", typeof(string));
 
 			queryText = queryText.ToLower();
 			TopDocs results;
 			if (isprecess)
 			{
-				results = searcher.Search(GenFianlQuery(queryText), 100);
+				BooleanQuery finalQ = GenFianlQuery(queryText);
+				submittedQuery = finalQ.ToString();
+				results = searcher.Search(finalQ, 100);
 			}
 			else
 			{
@@ -511,7 +514,7 @@ namespace SearchEngie
 
 
 					// Here we add five DataRows.
-					table.Rows.Add(rank, doc.Get(TITLE_FN).ToString(), doc.Get(AUTHOR_FN).ToString(), doc.Get(BIB_FN).ToString(),GetFirstSentence(doc.Get(WORDS_FN).ToString()));
+					table.Rows.Add(rank, doc.Get(TITLE_FN).ToString(), doc.Get(AUTHOR_FN).ToString(), doc.Get(BIB_FN).ToString(),GetFirstSentence(doc.Get(WORDS_FN).ToString()),doc.Get(WORDS_FN).ToString());
 				
 
 				}

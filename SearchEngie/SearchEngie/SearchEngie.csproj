@@ -83,6 +83,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Book.cs" />
+    <Compile Include="ChunkExtent.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

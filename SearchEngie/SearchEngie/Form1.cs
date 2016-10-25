@@ -14,6 +14,7 @@ namespace SearchEngie
 {
     public partial class Form1 : Form
     {
+		public List<DataTable> allTables = new List<DataTable>();
         public Form1()
         {
             InitializeComponent();
@@ -152,104 +153,131 @@ namespace SearchEngie
 
 
             dataGridView1.Visible = true;
+			dataGridView1.ReadOnly = true;
+			dataGridView1.Columns[0].Width = 40;
             //fill the whole area
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
 			dataGridView1.Rows.Clear();
 			dataGridView1.Refresh();
-            //dataGridView1.AutoResizeColumn();
-           // string[] row1 = new string[] { "Meatloaf", "Main Dish", "ground beef",
-           //"**" };
-           // dataGridView1.Rows.Add(row1);
+			//dataGridView1.AutoResizeColumn();
+			// string[] row1 = new string[] { "Meatloaf", "Main Dish", "ground beef",
+			//"**" };
+			// dataGridView1.Rows.Add(row1);
 
-           // //test list
-           // List<string> test_grid = new List<string>();
-           // test_grid.Add("1");
-           // test_grid.Add("2");
-           // test_grid.Add("3");
-
-
-           // DataGridViewRow row = (DataGridViewRow)dataGridView1.Rows[0].Clone();
-           // row.Cells[0].Value ="1";
-           // row.Cells[1].Value ="2";
-           // row.Cells[2].Value = "3";
-
-           // dataGridView1.Rows.Add(row);
+			// //test list
+			// List<string> test_grid = new List<string>();
+			// test_grid.Add("1");
+			// test_grid.Add("2");
+			// test_grid.Add("3");
 
 
-            //// ... Create 2D array of strings.
-            //string[,] array = new string[,]
-            //{
-            //    {"cat", "dog"},
-            //    {"bird", "fish"},
-            //};
-            //// ... Print out values.
-            //Console.WriteLine(array[0, 0]);
-            //Console.WriteLine(array[0, 1]);
-            //Console.WriteLine(array[1, 0]);
-            //Console.WriteLine(array[1, 1]);
+			// DataGridViewRow row = (DataGridViewRow)dataGridView1.Rows[0].Clone();
+			// row.Cells[0].Value ="1";
+			// row.Cells[1].Value ="2";
+			// row.Cells[2].Value = "3";
+
+			// dataGridView1.Rows.Add(row);
 
 
-
-            //            // Create a new DataTable.
-            //            DataTable table = new DataTable("Payments");
-
-            //            // Declare variables for DataColumn and DataRow objects.
-            //            DataColumn column;
-            //            DataRow row;
-
-            //            // Create new DataColumn, set DataType, 
-            //            // ColumnName and add to DataTable.    
-            //            column = new DataColumn();
-            //            column.DataType = System.Type.GetType("System.Int32");
-            //            column.ColumnName = "id";
-            //            column.ReadOnly = true;
-            //            column.Unique = true;
-            //           // column.Caption = LocalizedCaption.get("id"); //LocalizedCaption is my library to retrieve the chinese caption
-
-            //// Add the Column to the DataColumnCollection.
-            //            table.Columns.Add(column);
-
-
-            //            // Create three new DataRow objects and add them to the DataTable
-            //            for (int i = 0; i <= 2; i++)
-            //            {
-            //                row = table.NewRow();
-            //                row["id"] = i;
-            //                table.Rows.Add(row);
-            //            }
-
-            //            //assign the DataTable as the datasource for a DataGridView
-            //            dataGridView1.DataSource = table;
+			//// ... Create 2D array of strings.
+			//string[,] array = new string[,]
+			//{
+			//    {"cat", "dog"},
+			//    {"bird", "fish"},
+			//};
+			//// ... Print out values.
+			//Console.WriteLine(array[0, 0]);
+			//Console.WriteLine(array[0, 1]);
+			//Console.WriteLine(array[1, 0]);
+			//Console.WriteLine(array[1, 1]);
 
 
 
+			//            // Create a new DataTable.
+			//            DataTable table = new DataTable("Payments");
 
-            //create the dictionary for the queryField and queryText
-            //Dictionary<int, string> dic_search = new Dictionary<int, string>();
-            //dic_search.Add(selcetField, searchText);
+			//            // Declare variables for DataColumn and DataRow objects.
+			//            DataColumn column;
+			//            DataRow row;
 
-            
-            if ((indexPath == "") || (indexPath == null) || (indexPath == "None")) 
+			//            // Create new DataColumn, set DataType, 
+			//            // ColumnName and add to DataTable.    
+			//            column = new DataColumn();
+			//            column.DataType = System.Type.GetType("System.Int32");
+			//            column.ColumnName = "id";
+			//            column.ReadOnly = true;
+			//            column.Unique = true;
+			//           // column.Caption = LocalizedCaption.get("id"); //LocalizedCaption is my library to retrieve the chinese caption
+
+			//// Add the Column to the DataColumnCollection.
+			//            table.Columns.Add(column);
+
+
+			//            // Create three new DataRow objects and add them to the DataTable
+			//            for (int i = 0; i <= 2; i++)
+			//            {
+			//                row = table.NewRow();
+			//                row["id"] = i;
+			//                table.Rows.Add(row);
+			//            }
+
+			//            //assign the DataTable as the datasource for a DataGridView
+			//            dataGridView1.DataSource = table;
+
+
+
+
+			//create the dictionary for the queryField and queryText
+			//Dictionary<int, string> dic_search = new Dictionary<int, string>();
+			//dic_search.Add(selcetField, searchText);
+
+
+			if ((indexPath == "") || (indexPath == null) || (indexPath == "None"))
 			{
 				MessageBox.Show("Please input the directory of Index!");
 			}
-            else if (searchText == "")
-            {
-                MessageBox.Show("Please input the query!");
-            } 
+			else if (searchText == "")
+			{
+				MessageBox.Show("Please input the query!");
+			}
 			else
 			{
-				LuceneApplication LuceneApp = new LuceneApplication(fileofPath, indexPath,searchText);
-               // LuceneApp.QueryText = searchText;
+				LuceneApplication LuceneApp = new LuceneApplication(fileofPath, indexPath, searchText);
+				// LuceneApp.QueryText = searchText;
 
 				//List<string> result = new List<string>();
-				DataTable table = LuceneApp.GenSearch(); 
+				DataTable table = LuceneApp.GenSearch();
 				//result= LuceneApp.GenSearch();
-                LuceneApp.CleanUpSearch();
+				LuceneApp.CleanUpSearch();
 				//display the submitted query
 				//label8.Text += LuceneApp.SubmittedQuery;
-				dataGridView1.DataSource = table;
+				//DataTable showtable = table.Copy();
+
+
+				var showtables = table.AsEnumerable().ToChunks(10).Select(rows => rows.CopyToDataTable());
+
+				//int numberoftable = dataGridView1.Rows.Count();
+				int items = showtables.Count();
+				//showtable.Columns.RemoveAt(5);
+				//for (int i = 0; i < items; i++)
+				//foreach(DataTable innertable in showtables)
+				//{
+				//	dataGridView1.DataSource = innertable;
+				//	dataGridView1.Columns[5].Visible = false;
+				//}
+
+				foreach (DataTable innertable in showtables)
+				{
+					allTables.Add(innertable);
+				}
+				//dataGridView1.DataSource = (DataTable) showtables.First();
+				dataGridView1.DataSource = allTables[0];
+				dataGridView1.Columns[5].Visible = false;
+				//dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+				var lastColIndex = dataGridView1.Columns.Count - 1;
+				var lastCol = dataGridView1.Columns[lastColIndex];
+				lastCol.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 textBox4.Text += LuceneApp.SubmittedQuery;
                 //display the search result
     //            foreach (string s in result)
@@ -259,10 +287,21 @@ namespace SearchEngie
 			}
 		}
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
+		private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+			
+			//if (dataGridView1.CurrentCell.ColumnIndex.Equals(3) && e.RowIndex != -1)
+			//{
+			//	if (dataGridView1.CurrentCell != null && dataGridView1.CurrentCell.Value != null)
+			//		MessageBox.Show(dataGridView1.CurrentCell.Value.ToString());
+			//}
 
-        }
+			if ((dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null) && (e.ColumnIndex==4))
+			{
+				
+				MessageBox.Show(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex+1].Value.ToString());
+			}
+		}
 
         private void button5_Click(object sender, EventArgs e)
         {
@@ -280,5 +319,8 @@ namespace SearchEngie
 			testApp.TestFun(saveFileDialog1.FileName);
 
         }
+
+
+
     }
 }
