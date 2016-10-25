@@ -42,8 +42,8 @@ namespace SearchEngie
         //setting the query text 
         string queryText;
 		//Dictionary<int,string> queryDic;
-        //
-        string submittedQuery { get; set; }
+		//
+		string submittedQuery;
         //
         public char[] splitters = new char[] { ' ', '\t', '\'', '"', '-', '(', ')', ',', '’', '\n', ':', ';', '?', '.', '!' };
         public string[] stopWords = { "a", "an", "and", "are", "as", "at", "be", "but", "by", "for", "if", "in", "into", "is", "it", "no", "not", "of", "on", "or", "such", "that", "the", "their", "then", "there", "these", "they", "this", "to", "was", "will", "with" }; // for challange activity
@@ -198,8 +198,9 @@ namespace SearchEngie
 			foreach (FileInfo name in listfile)
 			{
 
-				//fileName = filesPath + "\\" + name;
-				Book genBook = ReadOneFile(name.ToString());
+				fileName = filesPath + "\\" + name;
+				//Book genBook = ReadOneFile(name.ToString());
+				Book genBook = ReadOneFile(fileName);
 				IndexBook(genBook);
 
 			}
@@ -481,13 +482,16 @@ namespace SearchEngie
 			if (isprecess)
 			{
 				BooleanQuery finalQ = GenFianlQuery(queryText);
-				submittedQuery = finalQ.ToString();
+				SubmittedQuery = finalQ.ToString();
 				results = searcher.Search(finalQ, 100);
 			}
 			else
 			{
-				results = searcher.Search(parser.Parse(queryText), 100);
+				Query finalQa = parser.Parse(queryText);
+				SubmittedQuery = finalQa.ToString();
+				results = searcher.Search(finalQa, 100);
 			}
+
 
 			int rank = 0;
 			if (results.TotalHits != 0)

@@ -144,6 +144,7 @@ namespace SearchEngie
             //clear old result
             //label8.Text = "Submitted Query:";
             textBox4.Text = "";
+			allTables.Clear();
             //richTextBox1.Text = "";
 
             string indexPath = label4.Text;
@@ -154,7 +155,7 @@ namespace SearchEngie
 
             dataGridView1.Visible = true;
 			dataGridView1.ReadOnly = true;
-			dataGridView1.Columns[0].Width = 40;
+			//dataGridView1.Columns[0].Width = 40;
             //fill the whole area
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
@@ -259,6 +260,9 @@ namespace SearchEngie
 
 				//int numberoftable = dataGridView1.Rows.Count();
 				int items = showtables.Count();
+
+				string showmsg = "Page 1 of " + items.ToString() + " pages";
+				label7.Text = showmsg;
 				//showtable.Columns.RemoveAt(5);
 				//for (int i = 0; i < items; i++)
 				//foreach(DataTable innertable in showtables)
@@ -274,11 +278,14 @@ namespace SearchEngie
 				//dataGridView1.DataSource = (DataTable) showtables.First();
 				dataGridView1.DataSource = allTables[0];
 				dataGridView1.Columns[5].Visible = false;
+				dataGridView1.Columns[0].Width = 40;
 				//dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 				var lastColIndex = dataGridView1.Columns.Count - 1;
 				var lastCol = dataGridView1.Columns[lastColIndex];
 				lastCol.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                textBox4.Text += LuceneApp.SubmittedQuery;
+                //textBox4.Text += LuceneApp.SubmittedQuery;
+				textBox4.Text = LuceneApp.SubmittedQuery;
+				//textBox4.Text = "finished";
                 //display the search result
     //            foreach (string s in result)
 				//{
