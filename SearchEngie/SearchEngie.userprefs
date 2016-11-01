@@ -1,0 +1,19 @@
+﻿<Properties StartupConfiguration="{C9FC7B3E-0E86-48EC-A61C-27888FA4B015}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="LuceneApplication.cs">
+    <Files>
+      <File FileName="LuceneApplication.cs" Line="293" Column="61" />
+      <File FileName="Form1.cs" Line="189" Column="4" />
+      <File FileName="NewSimilarity.cs" Line="18" Column="1" />
+      <File FileName="Program.cs" Line="23" Column="1" />
+      <File FileName="Form1.Designer.cs" Line="26" Column="29" />
+      <File FileName="ChunkExtent.cs" Line="1" Column="1" />
+      <File FileName="Book.cs" Line="1" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.SearchEngie PreferredExecutionTarget="MonoDevelop.Default" />
+</Properties>

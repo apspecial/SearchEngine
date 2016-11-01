@@ -1,0 +1,88 @@
+c:\users\n9391576\documents\visual studio 2015\Projects\SearchEngie\SearchEngie\bin\Debug\SearchEngie.exe.config
+c:\users\n9391576\documents\visual studio 2015\Projects\SearchEngie\SearchEngie\bin\Debug\SearchEngie.exe
+c:\users\n9391576\documents\visual studio 2015\Projects\SearchEngie\SearchEngie\bin\Debug\SearchEngie.pdb
+c:\users\n9391576\documents\visual studio 2015\Projects\SearchEngie\SearchEngie\obj\Debug\SearchEngie.csprojResolveAssemblyReference.cache
+c:\users\n9391576\documents\visual studio 2015\Projects\SearchEngie\SearchEngie\obj\Debug\SearchEngie.Form1.resources
+c:\users\n9391576\documents\visual studio 2015\Projects\SearchEngie\SearchEngie\obj\Debug\SearchEngie.Properties.Resources.resources
+c:\users\n9391576\documents\visual studio 2015\Projects\SearchEngie\SearchEngie\obj\Debug\SearchEngie.csproj.GenerateResource.Cache
+c:\users\n9391576\documents\visual studio 2015\Projects\SearchEngie\SearchEngie\obj\Debug\SearchEngie.exe
+c:\users\n9391576\documents\visual studio 2015\Projects\SearchEngie\SearchEngie\obj\Debug\SearchEngie.pdb
+c:\users\n9391576\documents\visual studio 2015\Projects\SearchEngie\SearchEngie\bin\Debug\Lucene.Net.dll
+c:\users\n9391576\documents\visual studio 2015\Projects\SearchEngie\SearchEngie\bin\Debug\Lucene.Net.pdb
+H:\IFN647\Assignment\SearchEngine-shawn\SearchEngine-shawn\SearchEngie\SearchEngie\bin\Debug\SearchEngie.exe.config
+H:\IFN647\Assignment\SearchEngine-shawn\SearchEngine-shawn\SearchEngie\SearchEngie\obj\Debug\SearchEngie.exe
+H:\IFN647\Assignment\SearchEngine-shawn\SearchEngine-shawn\SearchEngie\SearchEngie\obj\Debug\SearchEngie.pdb
+H:\IFN647\Assignment\SearchEngine-shawn\SearchEngine-shawn\SearchEngie\SearchEngie\bin\Debug\SearchEngie.exe
+H:\IFN647\Assignment\SearchEngine-shawn\SearchEngine-shawn\SearchEngie\SearchEngie\bin\Debug\SearchEngie.pdb
+H:\IFN647\Assignment\SearchEngine-shawn\SearchEngine-shawn\SearchEngie\SearchEngie\bin\Debug\Lucene.Net.dll
+H:\IFN647\Assignment\SearchEngine-shawn\SearchEngine-shawn\SearchEngie\SearchEngie\bin\Debug\Lucene.Net.pdb
+H:\IFN647\Assignment\SearchEngine-shawn\SearchEngine-shawn\SearchEngie\SearchEngie\obj\Debug\SearchEngie.csprojResolveAssemblyReference.cache
+H:\IFN647\Assignment\SearchEngine-shawn\SearchEngine-shawn\SearchEngie\SearchEngie\obj\Debug\SearchEngie.Form1.resources
+H:\IFN647\Assignment\SearchEngine-shawn\SearchEngine-shawn\SearchEngie\SearchEngie\obj\Debug\SearchEngie.Properties.Resources.resources
+H:\IFN647\Assignment\SearchEngine-shawn\SearchEngine-shawn\SearchEngie\SearchEngie\obj\Debug\SearchEngie.csproj.GenerateResource.Cache
+C:\Users\zhiying.zhou\Desktop\QUT\project-647\SearchEngie\SearchEngie\bin\Debug\SearchEngie.exe.config
+C:\Users\zhiying.zhou\Desktop\QUT\project-647\SearchEngie\SearchEngie\obj\Debug\SearchEngie.exe
+C:\Users\zhiying.zhou\Desktop\QUT\project-647\SearchEngie\SearchEngie\obj\Debug\SearchEngie.pdb
+C:\Users\zhiying.zhou\Desktop\QUT\project-647\SearchEngie\SearchEngie\bin\Debug\SearchEngie.exe
+C:\Users\zhiying.zhou\Desktop\QUT\project-647\SearchEngie\SearchEngie\bin\Debug\SearchEngie.pdb
+C:\Users\zhiying.zhou\Desktop\QUT\project-647\SearchEngie\SearchEngie\bin\Debug\Lucene.Net.pdb
+C:\Users\zhiying.zhou\Desktop\QUT\project-647\SearchEngie\SearchEngie\obj\Debug\SearchEngie.csprojResolveAssemblyReference.cache
+C:\Users\zhiying.zhou\Desktop\QUT\project-647\SearchEngie\SearchEngie\obj\Debug\SearchEngie.Form1.resources
+C:\Users\zhiying.zhou\Desktop\QUT\project-647\SearchEngie\SearchEngie\obj\Debug\SearchEngie.Properties.Resources.resources
+C:\Users\zhiying.zhou\Desktop\QUT\project-647\SearchEngie\SearchEngie\obj\Debug\SearchEngie.csproj.GenerateResource.Cache
+H:\IFN647\Assignment\SearchEngie\SearchEngie\SearchEngie\bin\Debug\SearchEngie.exe.config
+H:\IFN647\Assignment\SearchEngie\SearchEngie\SearchEngie\obj\Debug\SearchEngie.exe
+H:\IFN647\Assignment\SearchEngie\SearchEngie\SearchEngie\obj\Debug\SearchEngie.pdb
+H:\IFN647\Assignment\SearchEngie\SearchEngie\SearchEngie\obj\Debug\SearchEngie.csprojResolveAssemblyReference.cache
+H:\IFN647\Assignment\SearchEngie\SearchEngie\SearchEngie\obj\Debug\SearchEngie.Form1.resources
+H:\IFN647\Assignment\SearchEngie\SearchEngie\SearchEngie\obj\Debug\SearchEngie.Properties.Resources.resources
+H:\IFN647\Assignment\SearchEngie\SearchEngie\SearchEngie\obj\Debug\SearchEngie.csproj.GenerateResource.Cache
+H:\IFN647\Assignment\SearchEngie\SearchEngie\SearchEngie\bin\Debug\SearchEngie.exe
+H:\IFN647\Assignment\SearchEngie\SearchEngie\SearchEngie\bin\Debug\SearchEngie.pdb
+H:\IFN647\Assignment\SearchEngie\SearchEngie\SearchEngie\bin\Debug\Lucene.Net.dll
+H:\IFN647\Assignment\SearchEngie\SearchEngie\SearchEngie\bin\Debug\Lucene.Net.pdb
+C:\Users\zhiying.zhou\Desktop\QUT\project-647\SearchEngie-20161025T114213Z\SearchEngie\bin\Debug\SearchEngie.exe.config
+C:\Users\zhiying.zhou\Desktop\QUT\project-647\SearchEngie-20161025T114213Z\SearchEngie\obj\Debug\SearchEngie.exe
+C:\Users\zhiying.zhou\Desktop\QUT\project-647\SearchEngie-20161025T114213Z\SearchEngie\obj\Debug\SearchEngie.pdb
+C:\Users\zhiying.zhou\Desktop\QUT\project-647\SearchEngie-20161025T114213Z\SearchEngie\bin\Debug\SearchEngie.exe
+C:\Users\zhiying.zhou\Desktop\QUT\project-647\SearchEngie-20161025T114213Z\SearchEngie\bin\Debug\SearchEngie.pdb
+C:\Users\zhiying.zhou\Desktop\QUT\project-647\SearchEngie-20161025T114213Z\SearchEngie\bin\Debug\Lucene.Net.pdb
+C:\Users\zhiying.zhou\Desktop\QUT\project-647\SearchEngie-20161025T114213Z\SearchEngie\obj\Debug\SearchEngie.csprojResolveAssemblyReference.cache
+C:\Users\zhiying.zhou\Desktop\QUT\project-647\SearchEngie-20161025T114213Z\SearchEngie\obj\Debug\SearchEngie.Form1.resources
+C:\Users\zhiying.zhou\Desktop\QUT\project-647\SearchEngie-20161025T114213Z\SearchEngie\obj\Debug\SearchEngie.Properties.Resources.resources
+C:\Users\zhiying.zhou\Desktop\QUT\project-647\SearchEngie-20161025T114213Z\SearchEngie\obj\Debug\SearchEngie.csproj.GenerateResource.Cache
+H:\IFN647\Assignment\SearchEngie\SearchEngie\bin\Debug\SearchEngie.exe.config
+H:\IFN647\Assignment\SearchEngie\SearchEngie\obj\Debug\SearchEngie.exe
+H:\IFN647\Assignment\SearchEngie\SearchEngie\obj\Debug\SearchEngie.pdb
+H:\IFN647\Assignment\SearchEngie\SearchEngie\obj\Debug\SearchEngie.csprojResolveAssemblyReference.cache
+H:\IFN647\Assignment\SearchEngie\SearchEngie\obj\Debug\SearchEngie.Form1.resources
+H:\IFN647\Assignment\SearchEngie\SearchEngie\obj\Debug\SearchEngie.Properties.Resources.resources
+H:\IFN647\Assignment\SearchEngie\SearchEngie\obj\Debug\SearchEngie.csproj.GenerateResource.Cache
+H:\IFN647\Assignment\SearchEngie\SearchEngie\bin\Debug\SearchEngie.exe
+H:\IFN647\Assignment\SearchEngie\SearchEngie\bin\Debug\SearchEngie.pdb
+H:\IFN647\Assignment\SearchEngie\SearchEngie\bin\Debug\Lucene.Net.dll
+H:\IFN647\Assignment\SearchEngie\SearchEngie\bin\Debug\Lucene.Net.pdb
+C:\Users\n9391576\Downloads\SearchEngie-20161027T061703Z\SearchEngie\SearchEngie\bin\Debug\SearchEngie.exe.config
+C:\Users\n9391576\Downloads\SearchEngie-20161027T061703Z\SearchEngie\SearchEngie\obj\Debug\SearchEngie.exe
+C:\Users\n9391576\Downloads\SearchEngie-20161027T061703Z\SearchEngie\SearchEngie\obj\Debug\SearchEngie.pdb
+C:\Users\n9391576\Downloads\SearchEngie-20161027T061703Z\SearchEngie\SearchEngie\obj\Debug\SearchEngie.csprojResolveAssemblyReference.cache
+C:\Users\n9391576\Downloads\SearchEngie-20161027T061703Z\SearchEngie\SearchEngie\obj\Debug\SearchEngie.Form1.resources
+C:\Users\n9391576\Downloads\SearchEngie-20161027T061703Z\SearchEngie\SearchEngie\obj\Debug\SearchEngie.Properties.Resources.resources
+C:\Users\n9391576\Downloads\SearchEngie-20161027T061703Z\SearchEngie\SearchEngie\obj\Debug\SearchEngie.csproj.GenerateResource.Cache
+C:\Users\n9391576\Downloads\SearchEngie-20161027T061703Z\SearchEngie\SearchEngie\bin\Debug\SearchEngie.exe
+C:\Users\n9391576\Downloads\SearchEngie-20161027T061703Z\SearchEngie\SearchEngie\bin\Debug\SearchEngie.pdb
+C:\Users\n9391576\Downloads\SearchEngie-20161027T061703Z\SearchEngie\SearchEngie\bin\Debug\Lucene.Net.dll
+C:\Users\n9391576\Downloads\SearchEngie-20161027T061703Z\SearchEngie\SearchEngie\bin\Debug\Lucene.Net.pdb
+C:\Users\n9391576\Downloads\SearchEngie-20161027T061703Z\SearchEngie\SearchEngie\bin\Debug\Lucene.Net.Contrib.Snowball.dll
+C:\Users\n9391576\Downloads\SearchEngie-20161027T061703Z\SearchEngie\SearchEngie\bin\Debug\Lucene.Net.Contrib.Snowball.pdb
+C:\Users\zhiying.zhou\Desktop\QUT\project-647\test-20161031T012535Z\test\SearchEngie\SearchEngie\bin\Debug\SearchEngie.exe.config
+C:\Users\zhiying.zhou\Desktop\QUT\project-647\test-20161031T012535Z\test\SearchEngie\SearchEngie\obj\Debug\SearchEngie.exe
+C:\Users\zhiying.zhou\Desktop\QUT\project-647\test-20161031T012535Z\test\SearchEngie\SearchEngie\obj\Debug\SearchEngie.pdb
+C:\Users\zhiying.zhou\Desktop\QUT\project-647\test-20161031T012535Z\test\SearchEngie\SearchEngie\bin\Debug\SearchEngie.exe
+C:\Users\zhiying.zhou\Desktop\QUT\project-647\test-20161031T012535Z\test\SearchEngie\SearchEngie\bin\Debug\SearchEngie.pdb
+C:\Users\zhiying.zhou\Desktop\QUT\project-647\test-20161031T012535Z\test\SearchEngie\SearchEngie\bin\Debug\Lucene.Net.pdb
+C:\Users\zhiying.zhou\Desktop\QUT\project-647\test-20161031T012535Z\test\SearchEngie\SearchEngie\bin\Debug\Lucene.Net.Contrib.Snowball.pdb
+C:\Users\zhiying.zhou\Desktop\QUT\project-647\test-20161031T012535Z\test\SearchEngie\SearchEngie\obj\Debug\SearchEngie.csprojResolveAssemblyReference.cache
+C:\Users\zhiying.zhou\Desktop\QUT\project-647\test-20161031T012535Z\test\SearchEngie\SearchEngie\obj\Debug\SearchEngie.Form1.resources
+C:\Users\zhiying.zhou\Desktop\QUT\project-647\test-20161031T012535Z\test\SearchEngie\SearchEngie\obj\Debug\SearchEngie.Properties.Resources.resources
+C:\Users\zhiying.zhou\Desktop\QUT\project-647\test-20161031T012535Z\test\SearchEngie\SearchEngie\obj\Debug\SearchEngie.csproj.GenerateResource.Cache

@@ -1,0 +1,60 @@
+/Users/xiongwei/Downloads/SearchEngie 3/SearchEngie/SearchEngie/obj/Debug/.NETFramework,Version=v4.5.2.AssemblyAttribute.cs
+/Users/xiongwei/Downloads/SearchEngie 3/SearchEngie/SearchEngie/obj/Debug/SearchEngie.Form1.resources
+/Users/xiongwei/Downloads/SearchEngie 3/SearchEngie/SearchEngie/obj/Debug/SearchEngie.Properties.Resources.resources
+/Users/xiongwei/Downloads/SearchEngie 3/SearchEngie/SearchEngie/bin/Debug/SearchEngie.exe.config
+/Users/xiongwei/Downloads/SearchEngie 3/SearchEngie/SearchEngie/bin/Debug/SearchEngie.exe.mdb
+/Users/xiongwei/Downloads/SearchEngie 3/SearchEngie/SearchEngie/bin/Debug/SearchEngie.pdb
+/Users/xiongwei/Downloads/SearchEngie 3/SearchEngie/SearchEngie/bin/Debug/SearchEngie.exe
+/Users/xiongwei/Downloads/SearchEngie 3/SearchEngie/SearchEngie/obj/Debug/SearchEngie.exe
+/Users/xiongwei/Downloads/SearchEngie 3/SearchEngie/SearchEngie/obj/Debug/SearchEngie.exe.mdb
+/Users/xiongwei/Downloads/SearchEngie 3/SearchEngie/SearchEngie/obj/Debug/SearchEngie.pdb
+/Users/xiongwei/Downloads/SearchEngie 3/SearchEngie/SearchEngie/bin/Debug/Lucene.Net.dll
+/Users/xiongwei/Downloads/SearchEngie 3/SearchEngie/SearchEngie/bin/Debug/Lucene.Net.Contrib.Snowball.dll
+/Users/xiongwei/Projects/SearchEngine/SearchEngie/obj/Debug/.NETFramework,Version=v4.5.2.AssemblyAttribute.cs
+/Users/xiongwei/Projects/SearchEngine/SearchEngie/obj/Debug/SearchEngie.Form1.resources
+/Users/xiongwei/Projects/SearchEngine/SearchEngie/obj/Debug/SearchEngie.Properties.Resources.resources
+/Users/xiongwei/Projects/SearchEngine/SearchEngie/bin/Debug/SearchEngie.exe.config
+/Users/xiongwei/Projects/SearchEngine/SearchEngie/bin/Debug/SearchEngie.exe.mdb
+/Users/xiongwei/Projects/SearchEngine/SearchEngie/bin/Debug/SearchEngie.pdb
+/Users/xiongwei/Projects/SearchEngine/SearchEngie/bin/Debug/SearchEngie.exe
+/Users/xiongwei/Projects/SearchEngine/SearchEngie/obj/Debug/SearchEngie.exe
+/Users/xiongwei/Projects/SearchEngine/SearchEngie/obj/Debug/SearchEngie.exe.mdb
+/Users/xiongwei/Projects/SearchEngine/SearchEngie/obj/Debug/SearchEngie.pdb
+/Users/xiongwei/Projects/SearchEngine/SearchEngie/bin/Debug/Lucene.Net.dll
+/Users/xiongwei/Projects/SearchEngine/SearchEngie/bin/Debug/Lucene.Net.Contrib.Snowball.dll
+/Users/xiongwei/Downloads/SearchEngie 6/obj/Debug/.NETFramework,Version=v4.5.2.AssemblyAttribute.cs
+/Users/xiongwei/Downloads/SearchEngie 6/obj/Debug/SearchEngie.Form1.resources
+/Users/xiongwei/Downloads/SearchEngie 6/obj/Debug/SearchEngie.Properties.Resources.resources
+/Users/xiongwei/Downloads/SearchEngie 6/bin/Debug/SearchEngie.exe.config
+/Users/xiongwei/Downloads/SearchEngie 6/bin/Debug/SearchEngie.exe.mdb
+/Users/xiongwei/Downloads/SearchEngie 6/bin/Debug/SearchEngie.pdb
+/Users/xiongwei/Downloads/SearchEngie 6/bin/Debug/SearchEngie.exe
+/Users/xiongwei/Downloads/SearchEngie 6/obj/Debug/SearchEngie.exe
+/Users/xiongwei/Downloads/SearchEngie 6/obj/Debug/SearchEngie.exe.mdb
+/Users/xiongwei/Downloads/SearchEngie 6/obj/Debug/SearchEngie.pdb
+/Users/xiongwei/Downloads/SearchEngie 6/bin/Debug/Lucene.Net.dll
+/Users/xiongwei/Downloads/SearchEngie 6/bin/Debug/Lucene.Net.Contrib.Snowball.dll
+/Users/xiongwei/Downloads/SearchEngie_final/obj/Debug/.NETFramework,Version=v4.5.2.AssemblyAttribute.cs
+/Users/xiongwei/Downloads/SearchEngie_final/obj/Debug/SearchEngie.Form1.resources
+/Users/xiongwei/Downloads/SearchEngie_final/obj/Debug/SearchEngie.Properties.Resources.resources
+/Users/xiongwei/Downloads/SearchEngie_final/bin/Debug/SearchEngie.exe.config
+/Users/xiongwei/Downloads/SearchEngie_final/bin/Debug/SearchEngie.exe.mdb
+/Users/xiongwei/Downloads/SearchEngie_final/bin/Debug/SearchEngie.pdb
+/Users/xiongwei/Downloads/SearchEngie_final/bin/Debug/SearchEngie.exe
+/Users/xiongwei/Downloads/SearchEngie_final/obj/Debug/SearchEngie.exe
+/Users/xiongwei/Downloads/SearchEngie_final/obj/Debug/SearchEngie.exe.mdb
+/Users/xiongwei/Downloads/SearchEngie_final/obj/Debug/SearchEngie.pdb
+/Users/xiongwei/Downloads/SearchEngie_final/bin/Debug/Lucene.Net.dll
+/Users/xiongwei/Downloads/SearchEngie_final/bin/Debug/Lucene.Net.Contrib.Snowball.dll
+/Users/xiongwei/Dropbox/IFN 647 IR/Project/SearchEngie_dramers_n9391576_n9835580/obj/Debug/.NETFramework,Version=v4.5.2.AssemblyAttribute.cs
+/Users/xiongwei/Dropbox/IFN 647 IR/Project/SearchEngie_dramers_n9391576_n9835580/obj/Debug/SearchEngie.Form1.resources
+/Users/xiongwei/Dropbox/IFN 647 IR/Project/SearchEngie_dramers_n9391576_n9835580/obj/Debug/SearchEngie.Properties.Resources.resources
+/Users/xiongwei/Dropbox/IFN 647 IR/Project/SearchEngie_dramers_n9391576_n9835580/bin/Debug/SearchEngie.exe.config
+/Users/xiongwei/Dropbox/IFN 647 IR/Project/SearchEngie_dramers_n9391576_n9835580/bin/Debug/SearchEngie.exe.mdb
+/Users/xiongwei/Dropbox/IFN 647 IR/Project/SearchEngie_dramers_n9391576_n9835580/bin/Debug/SearchEngie.pdb
+/Users/xiongwei/Dropbox/IFN 647 IR/Project/SearchEngie_dramers_n9391576_n9835580/bin/Debug/SearchEngie.exe
+/Users/xiongwei/Dropbox/IFN 647 IR/Project/SearchEngie_dramers_n9391576_n9835580/obj/Debug/SearchEngie.exe
+/Users/xiongwei/Dropbox/IFN 647 IR/Project/SearchEngie_dramers_n9391576_n9835580/obj/Debug/SearchEngie.exe.mdb
+/Users/xiongwei/Dropbox/IFN 647 IR/Project/SearchEngie_dramers_n9391576_n9835580/obj/Debug/SearchEngie.pdb
+/Users/xiongwei/Dropbox/IFN 647 IR/Project/SearchEngie_dramers_n9391576_n9835580/bin/Debug/Lucene.Net.dll
+/Users/xiongwei/Dropbox/IFN 647 IR/Project/SearchEngie_dramers_n9391576_n9835580/bin/Debug/Lucene.Net.Contrib.Snowball.dll
